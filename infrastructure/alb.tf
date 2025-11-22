@@ -49,11 +49,12 @@ resource "aws_lb_listener" "webhook_relay_alb_listener" {
 }
 
 resource "aws_lb_target_group" "webhook_relay_alb_target_group" {
-  name                               = "webhook-relay-alb-target-group"
-  protocol                           = "HTTP"
-  vpc_id                             = var.vpc_id
-  target_type                        = "lambda"
-  lambda_multi_value_headers_enabled = true
+  name        = "webhook-relay-alb-target-group"
+  protocol    = "HTTP"
+  vpc_id      = var.vpc_id
+  target_type = "lambda"
+
+  lambda_multi_value_headers_enabled = false
 
   tags = {
     Name = "webhook-relay-alb-target-group"

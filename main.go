@@ -10,7 +10,8 @@ import (
 
 func handler(ctx context.Context, request events.ALBTargetGroupRequest) (events.ALBTargetGroupResponse, error) {
 
-	fmt.Println(request)
+	fmt.Printf("queryParameter: %+v\n", request.QueryStringParameters)
+	fmt.Printf("request: %+v\n", request.Body)
 
 	return events.ALBTargetGroupResponse{
 		StatusCode: 200,
@@ -20,6 +21,26 @@ func handler(ctx context.Context, request events.ALBTargetGroupRequest) (events.
 		Body:            `{"message": "hello"}`,
 		IsBase64Encoded: false,
 	}, nil
+}
+
+// get
+func getingWebhookUrls() {
+
+}
+
+// update
+func updateWebhookUrl() {
+
+}
+
+// delete
+func deleteWebhookUrl() {
+
+}
+
+// comm
+func comm() {
+
 }
 
 func main() {
