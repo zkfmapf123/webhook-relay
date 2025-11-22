@@ -1,4 +1,4 @@
-package webhookrelay
+package main
 
 import (
 	"context"

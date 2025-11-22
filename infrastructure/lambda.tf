@@ -48,7 +48,7 @@ resource "aws_iam_role_policy" "webhook_relay_lambda_policy" {
         ],
         "Effect" : "Allow",
         "Resource" : "*"
-      }
+      },
     ],
     "Version" : "2012-10-17"
   })
@@ -67,6 +67,14 @@ resource "aws_security_group" "webhook_relay_lambda_security_group" {
     security_groups = [aws_security_group.webhook_relay_alb_security_group.id]
   }
   egress = []
+}
+
+resource "aws_lambda_permission" "webhook_relay_lambda_permission" {
+  statement_id  = "AllowALBInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.webhook_relay_lambda.function_name
+  principal     = "elasticloadbalancing.amazonaws.com"
+  source_arn    = aws_lb_target_group.webhook_relay_alb_target_group.arn
 }
 
 resource "aws_lambda_function" "webhook_relay_lambda" {
