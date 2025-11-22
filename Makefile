@@ -3,3 +3,6 @@ apply:
 
 destroy:
 	cd infrastructure && terraform destroy --auto-approve -var-file=env.tfvars
+
+test:
+	go test -v ./internal/...

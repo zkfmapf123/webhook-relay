@@ -88,6 +88,12 @@ resource "aws_lambda_function" "webhook_relay_lambda" {
   timeout       = 30
   architectures = ["arm64"]
 
+  environment {
+    variables = {
+      SECRET_NAME = aws_secretsmanager_secret.webhook_relay_secret.name
+    }
+  }
+
   vpc_config {
     subnet_ids         = var.lambda_subnet_ids
     security_group_ids = [aws_security_group.webhook_relay_lambda_security_group.id]

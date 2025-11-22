@@ -3,9 +3,19 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/zkfmapf123/webhook-relay/internal"
+)
+
+var (
+	SECRET_NAME = os.Getenv("SECRET_NAME")
+)
+
+var (
+	sm = internal.MustSecretManager()
 )
 
 func handler(ctx context.Context, request events.ALBTargetGroupRequest) (events.ALBTargetGroupResponse, error) {
@@ -15,19 +25,19 @@ func handler(ctx context.Context, request events.ALBTargetGroupRequest) (events.
 	fmt.Printf("queryParameter: %+v\n", request.Path)
 	fmt.Printf("request: %+v\n", request.Body)
 
-	msg := ""
+	result := ""
 	switch parameter {
 	case "get":
-		msg = getingWebhookUrls()
+		result = getingWebhookUrls()
 
 	case "update":
-		msg = updateWebhookUrl()
+		result = updateWebhookUrl()
 
 	case "delete":
-		msg = deleteWebhookUrl()
+		result = deleteWebhookUrl()
 
 	case "webhook":
-		msg = comm()
+		result = comm()
 	}
 
 	return events.ALBTargetGroupResponse{
@@ -35,7 +45,7 @@ func handler(ctx context.Context, request events.ALBTargetGroupRequest) (events.
 		Headers: map[string]string{
 			"Content-Type": "application/json",
 		},
-		Body:            fmt.Sprintf(`{"message": "%s"}`, msg),
+		Body:            result,
 		IsBase64Encoded: false,
 	}, nil
 }

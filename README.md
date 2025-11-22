@@ -1,32 +1,46 @@
 # AWS Webhook Relay
 
-## CheckList
+Webhook을 중계하는 AWS 기반 서버리스 애플리케이션
 
-- [x] init terraform resources (lb, lambda, secret manager)
-- [ ] add to api
-  - [ ] add to webhook api
-  - [ ] listing webhook apis
-  - [ ] delete webhook api
-  - [ ] communication webhook relay
+## 📋 CheckList
 
-## Resource
+- [x] Terraform 리소스 초기화 (ALB, Lambda, Secret Manager)
+- [ ] API 구현
+  - [ ] Webhook 추가 API
+  - [ ] Webhook 목록 조회 API
+  - [ ] Webhook 삭제 API
+  - [ ] Webhook 중계 통신
 
-- AWS IAM Role (Github OIDC) - Lambda 배포 용
-- AWS Load Balancer
-- AWS Lambda
-- AWS Secret Manager (Webhook URL 저장)
+## 🏗️ AWS Resources
 
-## 구성에 필요한 부분
+- **AWS IAM Role (Github OIDC)** - Lambda 배포용
+- **AWS Application Load Balancer** - 외부 트래픽 수신
+- **AWS Lambda** - Webhook 처리
+- **AWS Secrets Manager** - Webhook URL 저장
 
-- OIDC IAM Role 만들기
-- Github Action 사용하기 위해선 아래 키 값들을 정의 해야 합니다
-  - AWS_OIDC_ARN
-  - LAMBDA_FUNCTION_NAME
-- 테라폼 사용하기 전, vars.tf 확인
+## ⚙️ 사전 준비
 
-## 실행
+### 1. OIDC IAM Role 생성
 
-```sh
-## 인프라 구성
+GitHub Actions에서 AWS에 접근하기 위한 OIDC Role을 생성해야 합니다.
+
+### 2. GitHub Secrets 설정
+
+Repository Settings > Secrets에 다음 값들을 추가하세요:
+
+- `AWS_OIDC_ARN` - OIDC IAM Role ARN
+- `LAMBDA_FUNCTION_NAME` - Lambda 함수 이름
+
+### 3. Terraform 변수 확인
+
+`infrastructure/env.tfvars` 파일을 확인하고 필요한 값들을 설정하세요.
+
+## 🚀 실행
+
+```bash
+# 인프라 구성
 make apply
+
+# 인프라 삭제
+make destroy
 ```
