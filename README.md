@@ -22,3 +22,11 @@
 - Github Action 사용하기 위해선 아래 키 값들을 정의 해야 합니다
   - AWS_OIDC_ARN
   - LAMBDA_FUNCTION_NAME
+- 테라폼 사용하기 전, vars.tf 확인
+
+## 실행
+
+```sh
+## 인프라 구성
+make apply
+```
