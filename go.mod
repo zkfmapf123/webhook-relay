@@ -1,4 +1,4 @@
-module webhook-relay
+module github.com/zkfmapf123/webhook-relay
 
 go 1.24.3
 
